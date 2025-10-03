@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: cquilumbabit/genarquitecture-frontend:latest
+    ports:
+      - "80:80" # PUERTO_FRONTEND: Reemplaza 80 con el puerto real de tu frontend
+    environment:
+      # Variables de entorno específicas del frontend (ej: URL del backend)
+      # REACT_APP_BACKEND_URL: http://localhost:8000 # Ejemplo, ajusta según tu configuración
+    depends_on:
+      - backend # Asumiendo que el frontend depende del backend
+    restart: always
+
+  backend:
+    image: cquilumbabit/genarquitecture-backend:latest
+    ports:
+      - "8000:8000" # PUERTO_BACKEND: Reemplaza 8000 con el puerto real de tu backend
+    environment:
+      # Variables de entorno específicas del backend (ej: conexión a base de datos, claves API)
+      # DATABASE_URL: postgres://user:password@db:5432/mydatabase # Ejemplo, ajusta según tu configuración
+      # API_KEY: ${API_KEY} # Ejemplo, se leerá del archivo .env
+    restart: always
+
+  # Si tu aplicación usa una base de datos u otros servicios, agrégalos aquí.
+  # Ejemplo de PostgreSQL:
+  # db:
+  #   image: postgres:13
+  #   environment:
+  #     POSTGRES_DB: mydatabase
+  #     POSTGRES_USER: user
+  #     POSTGRES_PASSWORD: password
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+  #   restart: always
+
+  minio:
+    image: minio/minio
+    ports:
+      - "9000:9000" # Puerto de la API de Minio
+      - "9001:9001" # Puerto de la consola de Minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    restart: always
+
+# Si usas volúmenes para persistencia de datos, defínelos aquí.
+volumes:
+  # db_data: # Para persistencia de la base de datos
+  minio_data: # Para persistencia de los datos de Minio
