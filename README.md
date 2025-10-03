@@ -18,15 +18,14 @@ Sigue estos pasos para poner en marcha la aplicación:
 1.  **Clonar el Repositorio (o descargar los archivos)**:
     Si tienes un repositorio Git, clónalo:
     ```bash
-    git clone <URL_DE_TU_REPOSITORIO>
+    git clone https://github.com/carlosquilumba/genarquitecture_v1.git
     cd genarquitecture
     ```
-    Si solo compartes los archivos, asegúrate de tener `docker-compose.yml` y `.env.example` en el mismo directorio.
 
 2.  **Configurar Variables de Entorno**:
     Copia el archivo de ejemplo `.env.example` a `.env`:
     ```bash
-    cp .env.example .env
+    cp .env.ejemplo .env
     ```
     Abre el archivo `.env` recién creado y rellena las variables necesarias con tus propias credenciales y configuraciones (especialmente las de Azure OpenAI y Minio).
 
@@ -67,12 +66,8 @@ Asegúrate de configurar las siguientes variables en tu archivo `.env`:
 *   `AZURE_OPENAI_API_KEY`: Tu clave de API de Azure OpenAI.
 *   `AZURE_OPENAI_API_BASE`: La URL base de tu instancia de Azure OpenAI.
 *   `MINIO_ENDPOINT`: Endpoint de Minio (por defecto `http://minio:9000` si se ejecuta con Docker Compose).
-*   `MINIO_ACCESS_KEY`: Clave de acceso para Minio.
-*   `MINIO_SECRET_KEY`: Clave secreta para Minio.
-*   `MINIO_BUCKET`: Nombre del bucket de Minio a utilizar.
 *   `MINIO_ROOT_USER`: Usuario root para la consola de Minio (por defecto `minioadmin`).
 *   `MINIO_ROOT_PASSWORD`: Contraseña root para la consola de Minio (por defecto `minioadmin`).
-*   `WORD_TEMPLATE_PATH`: Ruta a la plantilla de Word dentro del contenedor (generalmente no necesita cambiarse).
-*   `SKILLS_DIR`: Directorio de habilidades dentro del contenedor (generalmente no necesita cambiarse).
+
 
 ---
